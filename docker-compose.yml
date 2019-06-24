@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  apiservice:
+    build:
+      context: ./apiservice/
+    environment:
+      - NODE_ENV=development
+      - LISTEN_PORT=3100
+      - GECKO_DRIVER_BASEURL=http://geckodriver:4444
+    container_name: webflow_apiservice
+    ports:
+      - target: 3100
+        published: 3100
+        protocol: tcp
+        mode: host
+    links:
+      - geckodriver
+
+  geckodriver:
+    build:
+      context: ./docker-geckodriver/
+      args:
+        FIREFOX_VERSION: 66.0.3
+        GECKODRIVER_VERSION: 0.24.0
+    environment:
+      - PORT=4444
+    container_name: webflow_geckodriver
+    ports:
+      - target: 4444
+        published: 4444
+        protocol: tcp
+        mode: host
+
+
+

@@ -1,0 +1,26 @@
+{
+  "title": "parse fonts",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "url to crawl"
+    },
+    "limit": {
+      "type": "number",
+      "description": "limit of urls to crawl"
+    },
+    "mode": {
+      "type": "string",
+      "default": "dfs",
+      "description": "must be either 'dfs' or 'bfs' - perform depth or breadth first crawling"
+    },
+    "includeRelative": {
+      "type": "boolean",
+      "default": false,
+      "description": "whether to crawl relative links that exist on the page"
+    }
+  },
+  "required": ["url"]
+}

@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  test_server:
+    build:
+      context: ./apiservice/test/server/
+    environment:
+      - PORT=9100
+    container_name: webflow_test_server
+    ports:
+      - target: 9100
+        published: 9100
+        protocol: tcp
+        mode: host
+
+  geckodriver:
+    links:
+      - test_server
+

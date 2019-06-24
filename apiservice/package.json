@@ -1,0 +1,35 @@
+{
+  "name": "fontservice",
+  "version": "1.0.0",
+  "description": "webflow font crawler service",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node lib/index.js",
+    "start-compose-test": "docker-compose -f ../docker-compose.yml -f ./test/docker-compose.test.yml up -d",
+    "stop-compose-test": "docker-compose -f ../docker-compose.yml -f ./test/docker-compose.test.yml stop",
+    "run-tests": "mocha test/src",
+    "pause-before-tests": "sleep 2",
+    "build": "docker-compose -f ../docker-compose.yml -f ./test/docker-compose.test.yml build",
+    "test": "npm-run-all start-compose-test pause-before-tests run-tests stop-compose-test"
+  },
+  "author": "Andrei Rusu <andrei@nightwatchjs.org>",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^6.10.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "morgan": "^1.9.1",
+    "nconf": "^0.10.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  },
+  "devDependencies": {
+    "mocha": "^6.1.4",
+    "npm-run-all": "^4.1.5"
+  }
+}
