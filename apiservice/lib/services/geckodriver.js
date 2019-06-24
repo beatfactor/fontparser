@@ -81,22 +81,23 @@ module.exports = class GeckoDriver extends BaseService {
 
   processNodes(traversalMode = GeckoDriver.TraversalMode.DFS) {
     try {
-      const scriptFn = `const nodes = [];
-        walkTheDOM(document.body, function (node) {
-          if (node.nodeType === 3) {
-            let text = node.data.trim();
-            if (text.length > 0) {
-              nodes.push({
-                length: text.length,
-                font: node.parentNode ? getComputedStyle(node.parentNode)['font-family'] : ''
-              });
-            }
-          }
-        });
+      const scriptFn = `const nodes = []; var isAlphanumeric = /^[a-z0-9]+$/i;
+        walkTheDOM(document.body, ${GeckoDriver.visitNode().toString()});
         
         return nodes.reduce(function(prev, value) {
-          prev[value.font] = prev[value.font] || 0;
-          prev[value.font] += value.length;
+          prev[value.font] = prev[value.font] || {
+            total: 0,
+            chars: {}
+          };
+  
+          prev[value.font].total += value.length;
+          Object.keys(value.chars).forEach(function(key) {
+            if (prev[value.font].chars[key]) {
+              prev[value.font].chars[key] += value.chars[key];
+            } else {
+              prev[value.font].chars[key] = value.chars[key];
+            }
+          });
           return prev;
         }, {});
       `;
@@ -118,6 +119,49 @@ module.exports = class GeckoDriver extends BaseService {
       });
     } catch (err) {
       BaseService.handleWebdriverError(err);
+    }
+  }
+
+  static visitNode() {
+    return function(node) {
+      if (node.nodeType === 3) {
+        var text = node.data.trim();
+        if (text.length > 0) {
+          let chars = text.split('').filter(c => isAlphanumeric.test(c));
+          let charsObj = chars.reduce(function(prev, c) {
+            prev[c] = prev[c] || 0;
+            prev[c]++;
+            return prev;
+          }, {});
+          let font = node.parentNode ? getComputedStyle(node.parentNode)['font-family'] : '';
+          nodes.push({
+            length: text.length,
+            font,
+            chars: charsObj
+          });
+        }
+      }
+    }
+  }
+
+  static generateOutput() {
+    return function(nodes) {
+      nodes.reduce(function(prev, value) {
+        prev[value.font] = prev[value.font] || {
+          total: 0,
+          chars: {}
+        };
+
+        prev[value.font].total += value.length;
+        Object.keys(value.chars).forEach(function(key) {
+          if (prev[value.font].chars[key]) {
+            prev[value.font].chars[key] += value.chars[key];
+          } else {
+            prev[value.font].chars[key] = value.chars[key];
+          }
+        });
+        return prev;
+      }, {});
     }
   }
 };

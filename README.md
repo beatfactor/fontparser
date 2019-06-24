@@ -45,6 +45,8 @@ The tests contain a test service. There is also a test compose file which runs t
 
 First build the test project:
 ```sh
+$ cd apiservice
+$ npm install
 $ npm run build
 ```
 

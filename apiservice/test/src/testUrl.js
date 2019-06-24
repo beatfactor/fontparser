@@ -16,12 +16,7 @@ describe('parse fonts from test url', function() {
       try {
         assert.strictEqual(response.headers['app-version'], '1.0.0');
         assert.strictEqual(response.statusCode, 200);
-        assert.deepStrictEqual(body, {
-          Arial: 19,
-          Verdana: 27,
-          'sans-serif': 56,
-          serif: 6
-        });
+        assert.deepEqual(Object.keys(body.fonts), ['Arial', 'Verdana', 'sans-serif', 'serif']);
 
         cb();
       } catch (e) {
@@ -68,13 +63,9 @@ describe('parse fonts from test url', function() {
 
       try {
         assert.strictEqual(response.headers['app-version'], '1.0.0');
+        assert.strictEqual(response.headers['x-traversal-mode'], 'bfs');
         assert.strictEqual(response.statusCode, 200);
-        assert.deepStrictEqual(body, {
-          Arial: 19,
-          Verdana: 27,
-          'sans-serif': 56,
-          serif: 6
-        });
+        assert.deepEqual(Object.keys(body.fonts), ['Arial', 'Verdana', 'sans-serif', 'serif']);
 
         cb();
       } catch (e) {

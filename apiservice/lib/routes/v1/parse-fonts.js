@@ -80,7 +80,9 @@ router.get('/parseFonts', validateSchema('parse-fonts'), async (req, res, next) 
         res.setHeader('X-Traversal-Mode', mode);
       }
 
-      res.json(response.value);
+      res.json({
+        fonts: response.value
+      });
 
     } catch (err) {
       thrownError = err;
