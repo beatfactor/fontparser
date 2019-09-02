@@ -1,4 +1,5 @@
 # FontParser
+An API used to display all the fonts in use by a specified website.
 
 ## Introduction
 The API service is built with `express` and uses Mozilla's [Webdriver](https://www.w3.org/TR/webdriver1/) compatible service [Geckodriver](https://github.com/mozilla/geckodriver).
