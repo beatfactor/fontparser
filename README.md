@@ -1,4 +1,4 @@
-# Webflow FontParser
+# FontParser
 
 ## Introduction
 The API service is built with `express` and uses Mozilla's [Webdriver](https://www.w3.org/TR/webdriver1/) compatible service [Geckodriver](https://github.com/mozilla/geckodriver).
@@ -54,5 +54,3 @@ Then run the tests:
 ```sh
 $ npm test
 ```
-
-Due to the high complexity volume involved in this project, only integration tests have been written.
