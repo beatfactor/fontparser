@@ -1,5 +1,5 @@
 # FontParser
-An API used to display all the fonts in use by a specified website.
+A Node.js and Webdriver powered API service which displays the font families in use on a specified website. Uses Docker with docker-compose.
 
 ## Introduction
 The API service is built with `express` and uses Mozilla's [Webdriver](https://www.w3.org/TR/webdriver1/) compatible service [Geckodriver](https://github.com/mozilla/geckodriver).
